@@ -1,0 +1,18 @@
+{
+    "name": "aorm",
+    "description": "AORM",
+    "type": "library",
+    "authors": [
+        {
+            "name": "Angel Oliver",
+            "email": "angel.oliver.cv@gmail.com"
+        }
+    ],
+    "require": {},
+    "minimum-stability": "dev",
+    "autoload": {
+        "psr-4": {
+                  "aorm\\": "src/"
+                }
+    }
+}
