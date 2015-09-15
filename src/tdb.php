@@ -2,12 +2,23 @@
 
 namespace aorm;
 
+abstract
 class tdb {
+
+	static $connect = null;
+	static $table = null;
+
+	public
 	function __construct(){
-		echo "aorm/tdb";
+		
+	}
+
+	protected
+	function getDatos(){
+
 	}
 
 	function test(){
-		echo "esto es un test";
+		var_dump(aorm::getConnect(static::$connect));
 	}
 }

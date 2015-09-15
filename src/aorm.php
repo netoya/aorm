@@ -7,23 +7,33 @@ use aorm\connect as connect;
 class aorm{
 
 	static $instance;
+	static $connect;
 
-	public
+	protected
 	function __construct(){
 
 	}
 
+	public
+	function getInstance(){
+		if(empty($instance)){
+			static::$instance = new static();
+		}
+		
+		return static::$instance;
+	}
+
 	static 
-	function getConnect(){
-		return static::$connect;
+	function getConnect($name){
+		return static::$connect[$name];
 	}
 
 	static
-	function setConnect(connect $connect){
+	function setConnect($name, connect $connect){
+		
+		static::$connect[$name] = $connect;
 
-		static::$connect = $connect;
-
-		return static::$instance;
+		return $connect;
 	}
 
 

@@ -2,7 +2,7 @@
 
 namespace aorm;
 
-class connect{
+abstract class connect{
 
 	static $dbc;
 
@@ -21,10 +21,9 @@ class connect{
 		return static::$dbc;
 	}
 
-	protected
-	function connectDB(){
-		
-	}
+	// Abstract Functions
+	abstract protected 
+	function connectDB();
 
 
 }
