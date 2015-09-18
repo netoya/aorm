@@ -15,10 +15,9 @@ class select extends \aorm\sql{
 	) ;
 
 	public 
-	function select(){
+	function __construct(){
 		$args = func_get_args() ;
 		$this->_select["SELECT"] = $args ;
-		$this->_statement = "SELECT" ;
 
 		return $this ;
 	}

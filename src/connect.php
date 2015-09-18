@@ -4,12 +4,14 @@ namespace aorm;
 
 abstract class connect{
 
-	static $dbc;
+	static $instance;
+	static $defaults = array();
+	protected $dbc;
+	protected $settings;
 
 	public
 	function __construct($settings = array()){
-        $defaults = array();
-        $this->settings = array_merge($defaults, $settings);
+        $this->settings = array_merge(static::$defaults, $settings);
 	}
 
 	public
@@ -25,5 +27,10 @@ abstract class connect{
 	abstract protected 
 	function connectDB();
 
+	abstract public
+	function geTableColumns();
+
+	abstract public
+	function execute();
 
 }

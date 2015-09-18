@@ -25,11 +25,15 @@ class aorm{
 
 	static 
 	function getConnect($name){
+		if(empty(static::$connect[$name])){
+			throw new Exception("La conexion [" .$name . "] no existe", 1);
+			
+		}
 		return static::$connect[$name];
 	}
 
 	static
-	function setConnect($name, connect $connect){
+	function addConnect($name, connect $connect){
 		
 		static::$connect[$name] = $connect;
 
