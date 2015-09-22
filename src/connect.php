@@ -28,7 +28,7 @@ abstract class connect{
 	function connectDB();
 
 	abstract public
-	function geTableColumns($table_name);
+	function getTableColumns($table_name);
 
 	abstract public
 	function execute($query, $params);
