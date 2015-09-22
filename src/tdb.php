@@ -19,6 +19,11 @@ class tdb {
 	}
 
 	function test(){
-		var_dump(aorm::getConnect(static::$connect));
+		$connect = aorm::getConnect(static::$connect);
+		$dbc = $connect->getDbc();
+		$columns = $connect->geTableColumns(static::$table);
+		echo '<pre>';
+		print_r($columns);
+		echo '</pre>';
 	}
 }

@@ -16,11 +16,11 @@ abstract class connect{
 
 	public
 	function getDBC(){
-		if(empty(static::$dbc)){
-			static::$dbc = $this->connectDB();
+		if(empty($this->dbc)){
+			$this->dbc = $this->connectDB();
 		}
 
-		return static::$dbc;
+		return $this->dbc;
 	}
 
 	// Abstract Functions
@@ -28,9 +28,9 @@ abstract class connect{
 	function connectDB();
 
 	abstract public
-	function geTableColumns();
+	function geTableColumns($table_name);
 
 	abstract public
-	function execute();
+	function execute($query, $params);
 
 }
