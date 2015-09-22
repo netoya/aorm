@@ -21,7 +21,7 @@ class tdb {
 	function test(){
 		$connect = aorm::getConnect(static::$connect);
 		$dbc = $connect->getDbc();
-		$columns = $connect->geTableColumns(static::$table);
+		$columns = $connect->getTableColumns(static::$table);
 		echo '<pre>';
 		print_r($columns);
 		echo '</pre>';
