@@ -4,6 +4,7 @@ namespace aorm\connect;
 class pgsql extends \aorm\connect{
 
 	static $defaults = array('port' => '5432');
+	protected $table_columns = array();
 	
 	protected
 	function connectDB(){
@@ -45,6 +46,12 @@ class pgsql extends \aorm\connect{
 		$schema = 'public';
 		$table_name = explode('.', $table_name);
 		$table 	= array_pop($table_name);
+
+		$table_store_name = $schema . '.' . $table;
+
+		if(!empty($this->table_columns[$table_store_name])){
+			return $this->table_columns[$table_store_name];
+		}
 
 		if(!empty($table_name)){
 			$schema = array_pop($table_name);
@@ -89,14 +96,17 @@ class pgsql extends \aorm\connect{
 
 		$columns = [];
 		while ($obj = $rs->fetchObject()) {
-			$columns[] = $obj;
+			$name = $obj->name;
+			$columns[$name] = $obj;
 		}
+
+		$this->table_columns[$table_store_name] = $columns;
 		
 		return $columns;
 	} 
 
 	public
-	function execute($query, $params){
+	function execute($query, $params = array()){
 		$query = str_ireplace("%", "%%", $query);
 		$query = str_ireplace("?", "%s", $query);
 

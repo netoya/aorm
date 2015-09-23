@@ -26,7 +26,7 @@ class aorm{
 	static 
 	function getConnect($name){
 		if(empty(static::$connect[$name])){
-			throw new Exception("La conexion [" .$name . "] no existe", 1);
+			throw new \Exception("La conexion [" .$name . "] no existe", 1);
 			
 		}
 		return static::$connect[$name];

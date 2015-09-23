@@ -31,6 +31,6 @@ abstract class connect{
 	function getTableColumns($table_name);
 
 	abstract public
-	function execute($query, $params);
+	function execute($query, $params = array());
 
 }
