@@ -8,6 +8,7 @@ class tdb {
 	static $_table = null;
 	static $_where = null;
 	static $_columns = [];
+	static $_required = null;
 
 	protected $id = null;
 
@@ -99,35 +100,6 @@ class tdb {
 
 	}
 
-	static 
-	function columns(){
-		$tables  = (array)static::$_table;
-		$conn 	= static::connect();
-
-		if(empty(static::$_columns)){
-
-			$columns = array();
-			foreach($tables as $table){
-				$columns = array_merge($columns, $conn->getTableColumns($table));
-			}
-				
-			static::$_columns = $columns;
-		}
-
-		return static::$_columns;
-	}
-
-	protected
-	function columnExists($name){
-		$columns = static::columns();
-
-		if(key_exists($name, static::$_columns)){
-			return true;
-		}
-
-		return false;
-	}
-
 	public
 	function modified(){
 		if(!empty($this->data_new)){
@@ -148,6 +120,24 @@ class tdb {
 
 	public
 	function save(){
+		$required = $this->required();
+		$columns = $this->columns();
+
+		// Required validation
+		$data_required = array_diff_key($required, $this->data_new);
+		if(!empty($data_required)){
+			throw new \Exception("Required values: " . implode(', ', $data_required), 1);
+		}
+
+		if(empty($this->id)){
+			// Insert
+			//
+			
+		} else {
+			// Update
+			//
+			
+		}
 
 	}
 
@@ -178,6 +168,52 @@ class tdb {
 		}
 
 		return $select;
+	}
+
+	static 
+	function columns(){
+		$tables  = (array)static::$_table;
+		$conn 	= static::connect();
+
+		if(empty(static::$_columns)){
+
+			$columns = array();
+			foreach($tables as $table){
+				$columns = array_merge($columns, $conn->getTableColumns($table));
+			}
+
+
+				
+			static::$_columns = $columns;
+		}
+
+		return static::$_columns;
+	}
+
+	static
+	function required(){
+
+		if(empty(static::$_required)){
+			$columns = static::columns();		
+			foreach ($columns as $column) {
+				if($column->notnull == true and empty($column->default)){
+					static::$_required[$column->name] = $column->name;
+				}
+			}
+		}
+
+		return static::$_required;
+	}
+
+	protected
+	function columnExists($name){
+		$columns = static::columns();
+
+		if(key_exists($name, static::$_columns)){
+			return true;
+		}
+
+		return false;
 	}
 
 	static
